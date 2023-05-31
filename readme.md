@@ -12,3 +12,18 @@ player_url - адрес игрока
 ## Парсинг команд
 https://functions.yandexcloud.net/<function_id>?team_url=https://mosff.ru/team/2044
 team_url - адрес игрока
+
+# Тестирование фукции
+
+Чтобы проверить, что все нормально рабортает можно воспользоваться скриптом тестировщиком веб сервиса
+
+    python -m test адрес_фунции
+
+Если все прошло нормально
+
+    > python -m test https://functions.yandexcloud.net/d...on6
+    ...
+    ----------------------------------------------------------------------
+    Ran 3 tests in 3.079s
+
+    OK
