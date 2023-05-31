@@ -2,7 +2,7 @@ import argparse
 import unittest
 import requests
 
-class MatchTest(unittest.TestCase):
+class ServiceTest(unittest.TestCase):
     url=None
     def setUp(self) -> None:
         pass
@@ -34,10 +34,10 @@ if __name__ == '__main__':
     parser.add_argument('cloud_url')           # positional argument
 
     args = parser.parse_args()
-    MatchTest.url=args.cloud_url
+    ServiceTest.url=args.cloud_url
     
 
-    suite = unittest.defaultTestLoader.loadTestsFromTestCase(MatchTest)
+    suite = unittest.defaultTestLoader.loadTestsFromTestCase(ServiceTest)
     unittest.TextTestRunner().run(suite)
 
 
