@@ -1,7 +1,7 @@
 # Как пользоваться
 
 ## Парсинг протоколов
-https://functions.yandexcloud.net/<function_id>?protocol_url=https://mosff.ru/player/2060&match_time=80
+https://functions.yandexcloud.net/<function_id>?protocol_url=https://mosff.ru/match/348580&match_time=80
 protocol_url - адрес протокола
 match_time - время матча(опционально)
 
@@ -27,3 +27,9 @@ team_url - адрес игрока
     Ran 3 tests in 3.079s
 
     OK
+
+# TODO
+
+[ ] log parameters
+[ ] log errors
+[ ] trace stack to log
