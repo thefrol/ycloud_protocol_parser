@@ -1,4 +1,9 @@
-from protocol_parsers import MosffParser, MosffPlayerParser, MosffTeamParser
+import logging
+
+from protocol_parsers import MosffParser, MosffPlayerParser, MosffTeamParser,YflParser 
+
+from stack_log import StackLogger
+
 
 PROTOCOL_URL_PARAMETER_NAME='protocol_url'
 MATCH_TIME_PARAMETER_NAME='match_time'
@@ -23,6 +28,9 @@ def check_input(event):
     
 
 def handler(event, context):
+    log_stack=StackLogger()
+    logger=logging.getLogger()
+    logger.addHandler(log_stack)
 
     input_type=check_input(event)
     if not input_type:
@@ -42,19 +50,27 @@ def handler(event, context):
         try:
             if match_time:
                 match_time=int(match_time)
-            result=MosffParser(protocol_URL,match_time).to_rbdata()
+            
+            if 'mosff' in protocol_URL:
+                result=MosffParser(protocol_URL,match_time).to_rbdata()
+            elif 'yfl' in protocol_URL:
+                result=YflParser(protocol_URL).to_rbdata()
+            else:
+                raise Exception('Unknown url')
+
 
             return {
             'statusCode': 200,
                 'body': {
                     'protocol':result,
-                    'log':None
+                    'log':log_stack.collect(),
                 },
             }
-        except:
+        except Exception as e:
             return {
                 'statusCode': 500,
                 'body': 'parsing protocol failed',
+                'err': str(e)
             }
     if input_type=='player':
         try:
@@ -64,7 +80,7 @@ def handler(event, context):
             'statusCode': 200,
                 'body': {
                     'player':result,
-                    'log':None
+                    'log':log_stack.collect()
                 },
             }
         except:
@@ -80,7 +96,7 @@ def handler(event, context):
             'statusCode': 200,
                 'body': {
                     'team':result,
-                    'log':None
+                    'log':log_stack.collect()
                 },
             }
         except:
